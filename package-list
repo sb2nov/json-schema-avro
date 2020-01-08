@@ -1,0 +1,5 @@
+com.github.fge.avro
+com.github.fge.avro.translators
+com.github.fge.jsonschema2avro
+com.github.fge.jsonschema2avro.predicates
+com.github.fge.jsonschema2avro.writers
