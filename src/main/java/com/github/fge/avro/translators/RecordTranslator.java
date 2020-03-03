@@ -21,6 +21,7 @@ package com.github.fge.avro.translators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.fge.avro.MutableTree;
 import com.github.fge.jackson.JsonLoader;
@@ -109,7 +110,10 @@ final class RecordTranslator
     private static void injectDefault(final ObjectNode propertyNode,
         final Schema.Field field)
     {
-        final JsonNode value = (JsonNode) field.defaultVal();
+        ObjectNode o = new JsonNodeFactory(true).objectNode();
+        o.putPOJO("Input", field.defaultVal());
+        JsonNode value = o.get("Input");
+//        final JsonNode value = (JsonNode) field.defaultVal();
         if (value == null)
             return;
 

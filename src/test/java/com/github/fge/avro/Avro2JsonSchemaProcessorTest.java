@@ -25,6 +25,7 @@ import com.github.fge.jsonschema.core.report.DevNullProcessingReport;
 import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.core.tree.JsonTree;
+import com.github.fge.jsonschema.core.tree.SchemaTree;
 import com.github.fge.jsonschema.core.tree.SimpleJsonTree;
 import com.github.fge.jsonschema.core.util.ValueHolder;
 import org.apache.avro.SchemaParseException;
@@ -55,8 +56,9 @@ public final class Avro2JsonSchemaProcessorTest
         final ProcessingReport report = new DevNullProcessingReport();
 
         try {
-            new Avro2JsonSchemaProcessor().process(report, input);
-            fail("No exception thrown!!");
+            ValueHolder<SchemaTree> outputSchema = new Avro2JsonSchemaProcessor().process(report, input);
+            JsonNode output = outputSchema.getValue().getBaseNode();
+            fail("No exception thrown!! and output is:" + output.toString());
         } catch (IllegalAvroSchemaException e) {
             final ProcessingMessage message = e.getProcessingMessage();
             final JsonNode node = message.asJson();
